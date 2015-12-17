@@ -2,6 +2,10 @@
 
 My way of teaching Git around me, mostly used at work. :)
 
+Packages (Debian) to build PDF:
+- texlive-latex-recommended
+- texlive-fonts-extra
+
 # License #
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)][license]
