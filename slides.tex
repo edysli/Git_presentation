@@ -40,33 +40,33 @@
   \end{block}
 \end{frame}
 
-% \begin{frame}{Centralized vs. distributed}
-%   \begin{columns}[t]
-%     \begin{column}{6cm}
-%       \begin{block}{Centralized}
-%         \begin{itemize}
-%         \item Examples: CVS, Subversion, Perforce
-%         \item Clients check out the latest version from a server
-%         \item One place to go
-%         \item Single point of failure
-%         \end{itemize}
-%       \end{block}
-%     \end{column}
-%     \begin{column}{6cm}
-%       \begin{block}{Distributed}
-%         \begin{itemize}
-%         \item Examples: Git, Mercurial, Bazaar
-%         \item Clients check out a complete copy of the repository
-%         \item Works without a network connection
-%         \item Requires some organization: who is the reference?
-%         \end{itemize}
-%       \end{block}
-%     \end{column}
-%   \end{columns}
-% \end{frame}
+\begin{frame}{Centralized vs. distributed systems}
+  \begin{columns}[t]
+    \begin{column}{6cm}
+      \begin{block}{Centralized}
+        \begin{itemize}
+        \item Examples: CVS, Subversion, Perforce
+        \item Clients check out the latest version from a server
+        \item Needs a connection to the server for all operations
+        \item One place to go to
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{6cm}
+      \begin{block}{Distributed}
+        \begin{itemize}
+        \item Examples: Git, Mercurial, Bazaar
+        \item Clients download a complete copy of the repository
+        \item Works without a network connection
+        \item Requires some organization: where is the reference?
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
 
 \section{Git concepts}
-%reviser def branche/tag
+%TODO: reviser def branche/tag
 \begin{frame}{Distributed}
   Everyone has a complete copy of the repository
   \begin{center}
@@ -79,17 +79,6 @@
   \begin{center}
     \includegraphics{images/directory_structure.png}
   \end{center}
-% \begin{block}{Directory structure}
-  % \begin{itemize}
-  % \item \texttt{project/} \emph{Working directory}: checkout of a single version of the project
-  %   \begin{itemize}
-  %   \item \texttt{.git/} Git \emph{repository} storing all data
-  %   \item \texttt{fileA} Working copy of files tracked by Git
-  %   \item \texttt{fileB}
-  %   \item \emph{Staging area (index)}: changes that will go into the next commit
-  %   \end{itemize}
-  % \end{itemize}
-% \end{block}
 \end{frame}
 
 \begin{frame}{How Git works}
@@ -101,6 +90,7 @@
   \item[Branch] Pointer to a commit
   \item[Tag] Text label on a commit
   \end{itemize}
+  \note{Git stores whole files, not differences}
 \end{frame}
 
 \begin{frame}{Three states}
@@ -113,6 +103,7 @@
 \end{frame}
 
 \begin{frame}{Branching \& merging}
+%TODO: review when conflicts can happen
   \begin{center}
     \only<+>{\includegraphics{images/branch0.png}}
     \only<+>{\includegraphics{images/branch1.png}\\New branch ``iss53'' from ``master''}
@@ -132,12 +123,9 @@
   \end{center}
 \end{frame}
 
-\section{Using Git}
+\section{Git commands}
 \begin{frame}{Repository creation}
   \only<+>{
-    \begin{center}
-      \includegraphics{images/tortoise_init.png}
-    \end{center}
     \begin{block}{Initializing a repository in an existing directory}
       \texttt{git init}
       \begin{itemize}
@@ -147,9 +135,6 @@
     \end{block}
   }
   \only<+>{
-    \begin{center}
-      \includegraphics{images/tortoise_clone.png}
-    \end{center}
     \begin{block}{Cloning an existing repository}
       \texttt{git clone <URL>}
       \begin{itemize}
@@ -161,95 +146,72 @@
   }
 \end{frame}
 
-\begin{frame}{Checking in}
+\begin{frame}{Recording changes}
 \only<+>{
-  \begin{center}
-    \includegraphics{images/tortoise_add.png}
-  \end{center}
-  \begin{block}{Staging changes}
+  \begin{block}{Staging}
     \texttt{git add <file>}
     \begin{itemize}
-    \item Adds the current state of the file to version control
+    \item Adds the current state of the file to the staging area
     \item Will be in next commit
-    %\item Adds the current state of the file to the staging area
-    %\item If you modify the file after \texttt{git add}, the \alert{new changes are not staged}.
+    \item If you modify the file after \texttt{git add}, the \alert{new changes are not staged}.
+    \note{Advanced: Can also add only a part of a change to the staging area, interactive option.}
     \end{itemize}
   \end{block}
 }
 \only<+>{
-  \begin{center}
-    \includegraphics{images/tortoise_commit.png}
-  \end{center}
-  \begin{block}{Committing changes}
+  \begin{block}{Committing}
     \texttt{git commit}
     \begin{itemize}
     \item Writes every changes in the staging area to the repository
     \item Only staged changes are committed
     \end{itemize}
-    % \texttt{git commit -a}
-    % \begin{itemize}
-    % \item Shortcut: stages and commits all \emph{already tracked} files
-    % \end{itemize}
   \end{block}
 }
 \end{frame}
 
-\begin{frame}{Looking at changes}
-  \only<1>{
-    \begin{center}
-      \includegraphics{images/tortoise_status.png}
-    \end{center}
-    \begin{block}{Checking the status of your files}
-      \texttt{git status}
-      \begin{itemize}
-      \item Lists files by state
-      \item The most useful command to know the current state of your repository
-      %\item Gives hints on what to do next or how to undo
-      \end{itemize}
-    \end{block}
-  }
-  \only<2-3>{
-    \begin{center}
-      \includegraphics{images/tortoise_diff.png}
-    \end{center}
-    \begin{block}{Viewing changes inside files}
-      \texttt{git diff}
-      \begin{itemize}
-      \item Shows what is changed but not yet staged
-      \item Compares working directory with staging area
-      \end{itemize}
-      \onslide<3>
-      \texttt{git diff --staged}
-      \begin{itemize}
-      \item Shows what would go into the next commit
-      \item Compares last commit with ``next'' commit
-      \end{itemize}
-    \end{block}
-  }
+\begin{frame}{Knowing where you are}
+  \begin{block}{Checking the status of your files}
+    \texttt{git status}
+    \begin{itemize}
+    \item Lists files by state
+    \item The most useful command to know the current state of your repository
+    \item Gives hints on what to do next or how to undo
+    \end{itemize}
+  \end{block}
 \end{frame}
 
-% \begin{frame}{Moving files around}
-%   \begin{block}<+->{Removing files}
-%     \texttt{git rm <file>}
-%     \begin{itemize}
-%     \item Deletes the file and stages its removal
-%     \end{itemize}
-%   \end{block}
-%   \begin{block}<+->{Renaming files}
-%     \texttt{git mv <old name> <new name>}
-%     \begin{itemize}
-%     \item Renames the file and stages the change
-% %    \item Shortcut for three commands:\\\texttt{mv <old name> <new name>\\git rm <old name>\\git add <new name>}
-%     \end{itemize}
-%   \end{block}
-% \end{frame}
+\begin{frame}{Looking at changes}
+  \begin{block}{Viewing changes inside files}
+    \texttt{git diff}
+    \begin{itemize}
+    \item Shows what is changed but not yet staged
+    \item Compares working directory with staging area
+    \end{itemize}
+    \texttt{git diff --staged}
+    \begin{itemize}
+    \item Shows what would go into the next commit
+    \item Compares last commit with ``next'' commit
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Moving files around}
+  \begin{block}<+->{Removing files}
+    \texttt{git rm <file>}
+    \begin{itemize}
+    \item Deletes the file and stages its removal
+    \end{itemize}
+  \end{block}
+  \begin{block}<+->{Renaming files}
+    \texttt{git mv <old name> <new name>}
+    \begin{itemize}
+    \item Renames the file and stages the change
+    \end{itemize}
+  \end{block}
+\end{frame}
 
 \begin{frame}{Ooops! Undoing}
   \only<1-2>{
-    \begin{center}
-      \includegraphics<1>{images/tortoise_commit.png}
-      \includegraphics<2>[width=10cm]{images/tortoise_commit_amend.png}
-    \end{center}
     \begin{block}<1-2>{Changing your last commit}
       \texttt{git commit --amend}
       \begin{itemize}
@@ -259,10 +221,7 @@
     \end{block}
   }
   \only<3-4>{
-    \begin{center}
-      \includegraphics{images/tortoise_revert.png}
-    \end{center}
-    \begin{block}{Unmodifying a modified file}
+    \begin{block}{Reverting a modified file}
       \texttt{git checkout -- <file>}
       \begin{itemize}
       \item Discards changes in file
@@ -280,15 +239,12 @@
 \end{frame}
 
 \begin{frame}{History}
-  \begin{center}
-    \includegraphics{images/tortoise_log.png}
-  \end{center}
   \begin{block}{Viewing the commit history}
     \texttt{git log}
     \begin{itemize}
     \item Lists commits from most to least recent
     \item Shows commit checksum, author, date and message
-    \item Has many options to customise output
+    \item Has many options to customise output %TODO: list 3 most useful options
     \end{itemize}
   \end{block}
   % \begin{block}<+->{Graphical interface}
@@ -302,9 +258,6 @@
 
 \begin{frame}{Branching and merging}
   \only<+>{
-    \begin{center}
-      \includegraphics{images/tortoise_branch.png}
-    \end{center}
     \begin{block}{Creating a new branch}
       \texttt{git branch <name>}
       \begin{itemize}
@@ -313,9 +266,6 @@
     \end{block}
   }
   \only<+>{
-    \begin{center}
-      \includegraphics{images/tortoise_checkout.png}
-    \end{center}
     \begin{block}{Switching to another branch}
       \texttt{git checkout <branch name>}
       \begin{itemize}
@@ -324,9 +274,6 @@
     \end{block}
   }
   \only<+>{
-    \begin{center}
-      \includegraphics{images/tortoise_merge.png}
-    \end{center}
     \begin{block}{Merging two branches}
       \texttt{git merge <branch name>}
       \begin{itemize}
@@ -336,9 +283,6 @@
     \end{block}
   }
   \only<+>{
-    \begin{center}
-      \includegraphics{images/tortoise_rebase.png}
-    \end{center}
     \begin{block}{Rebasing}
       \texttt{git rebase <upstream branch>}
       \begin{itemize}
@@ -350,23 +294,16 @@
 
 \begin{frame}{Interacting with others}
   \only<1>{
-    \begin{center}
-      \includegraphics{images/tortoise_sync.png}
-    \end{center}
     \begin{block}{Linking to remote repositories}
       \texttt{git remote}
       \begin{itemize}
       \item \emph{Remote repositories}: other versions of your project hosted elsewhere
       \item Lists, adds or removes links to remote repositories
         % \item \emph{origin}: link to the repository you cloned from
-      \end{itemize}
+      \end{itemize}%TODO: remote show
     \end{block}
   }
   \only<2-3>{
-    \begin{center}
-      \includegraphics<2>{images/tortoise_fetch.png}
-      \includegraphics<3>{images/tortoise_pull.png}
-    \end{center}
     \begin{block}{Retrieving updates}
       \only<2>{
         \texttt{git fetch [remote name]}
@@ -386,9 +323,6 @@
     \end{block}
   }
   \only<4>{
-    \begin{center}
-      \includegraphics{images/tortoise_push.png}
-    \end{center}
     \begin{block}{Sharing updates}
       \texttt{git push [remote name] [branch name]}
       \begin{itemize}
@@ -399,13 +333,15 @@
   }
 \end{frame}
 
+%TODO: git tag
+
 \begin{frame}{Where is the manual?}
   \begin{columns}
     \begin{column}[t]{6cm}
       \begin{block}{\emph{Pro Git} book}
         \begin{itemize}
         \item \url{http://git-scm.com/book}
-        \item Chapters 1--3
+        \item Chapters 1--3, 5
         \end{itemize}
       \end{block}
       \begin{block}{More}
@@ -429,81 +365,6 @@
   \begin{center}
     \includegraphics[height=8cm]{images/distributed-origin.png}
   \end{center}
-\end{frame}
-
-\begin{frame}{Permanent public branches}
-  \begin{columns}
-    \begin{column}{6cm}
-      \begin{center}
-        \includegraphics[height=8cm]{images/git_branches_permanent.pdf}
-      \end{center}
-    \end{column}
-    \begin{column}{5cm}
-      \begin{block}<+->{master}
-        \begin{itemize}
-        \item Production code
-        \item Commit $=$ release
-        \end{itemize}
-      \end{block}
-      \begin{block}<+->{development}
-        \begin{itemize}
-        \item Next release
-        \item Always buildable 
-        \end{itemize}
-      \end{block}
-      \begin{block}<+->{support}
-        \begin{itemize}
-        \item Old releases
-        \end{itemize}
-      \end{block}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{Temporary public branches}
-  \begin{columns}
-    \begin{column}{6cm}
-      \begin{center}
-        \includegraphics[height=8cm]{images/git_branches_temporary.pdf}
-      \end{center}
-    \end{column}
-    \begin{column}{5cm}
-      \begin{block}<+->{release}
-        \begin{itemize}
-        \item Preparation of production release
-        \item Bug fixes \alert{only}
-        \end{itemize}
-      \end{block}
-      % \begin{block}{support-release}
-      %   \begin{itemize}
-      %   \item Releases for old versions
-      %   \end{itemize}
-      % \end{block}
-      \begin{block}<+->{hotfix}
-        \begin{itemize}
-        \item Urgent bug fix
-        \end{itemize}
-      \end{block}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{Temporary private branches}
-  \begin{columns}
-    \begin{column}{6cm}
-      \begin{center}
-        \includegraphics[height=8cm]{images/git_branches_private.pdf}
-      \end{center}
-    \end{column}
-    \begin{column}{5cm}
-      \begin{block}{feature}
-        \begin{itemize}
-        \item Separate every feature or bug fix into its own branch
-        \item Integrate often (daily) with development branch
-        \end{itemize}
-      \end{block}
-    \end{column}
-  \end{columns}
 \end{frame}
 
 %\begin{frame}{Daily workflow}
