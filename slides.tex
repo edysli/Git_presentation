@@ -42,7 +42,7 @@
 
 \begin{frame}{Centralized vs. distributed systems}
   \begin{columns}[t]
-    \begin{column}{6cm}
+    \begin{column}{5.5cm}
       \begin{block}{Centralized}
         \begin{itemize}
         \item Examples: CVS, Subversion, Perforce
@@ -52,7 +52,7 @@
         \end{itemize}
       \end{block}
     \end{column}
-    \begin{column}{6cm}
+    \begin{column}{5.5cm}
       \begin{block}{Distributed}
         \begin{itemize}
         \item Examples: Git, Mercurial, Bazaar
@@ -66,7 +66,7 @@
 \end{frame}
 
 \section{Git concepts}
-%TODO: reviser def branche/tag
+
 \begin{frame}{Distributed}
   Everyone has a complete copy of the repository
   \begin{center}
@@ -75,25 +75,22 @@
 \end{frame}
 
 \begin{frame}{Inside a Git-managed project}
-%\texttt{.git} directory is the repository
+The \texttt{.git} directory is the repository, everything else is the \emph{working directory}.
   \begin{center}
     \includegraphics{images/directory_structure.png}
   \end{center}
 \end{frame}
 
-\begin{frame}{How Git works}
-  \begin{center}
-    \includegraphics{images/commit.png}
-  \end{center}
+\begin{frame}{Commits}
   \begin{itemize}
-  \item[Commit] Snapshot of files at given time\\No sequential revision numbers but checksums (SHA-1 hash)\\Points to parent commit
-  \item[Branch] Pointer to a commit
-  \item[Tag] Text label on a commit
+  \item Git stores whole files in the repository, not differences. Thus a \emph{commit} is a snapshot of tracked files at given time.
+  \item Each commit is identified by its hash (SHA-1). There are no sequential revision numbers.
+  \item Commits contain pointers to their parent commit(s).
   \end{itemize}
-  \note{Git stores whole files, not differences}
 \end{frame}
 
-\begin{frame}{Three states}
+%TODO: replace picture with v2 from Git book, it's much better
+\begin{frame}{The staging area and file states}
   \begin{center}
     modified --- staged --- committed
   \end{center}
@@ -102,86 +99,108 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{Branching \& merging}
-%TODO: review when conflicts can happen
+\begin{frame}{Branches}
   \begin{center}
-    \only<+>{\includegraphics{images/branch0.png}}
-    \only<+>{\includegraphics{images/branch1.png}\\New branch ``iss53'' from ``master''}
-    \only<+>{\includegraphics{images/branch2.png}\\New commit on branch ``iss53''}
-    \only<+>{\includegraphics{images/branch3.png}\\Switch work on new branch ``hotfix''}
-    \only<+>{\includegraphics{images/branch5.png}\\Merge ``hotfix'' into ``master'' (fast-forward)\\No conflict}
-    \only<+>{\includegraphics{images/branch6.png}\\Merge ``iss53'' into ``master'' (three-way)\\Conflicts can happen}
+    \includegraphics{images/commit.png}
   \end{center}
+  \begin{itemize}
+  \item[Branch] Pointer to a commit\\Very fast to create, delete or modify
+  \item[master] Default branch name
+  \item[HEAD] Points to the current branch
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{Rebasing}{Merging with a cleaner history}
-  \begin{center}
-    \only<+>{\includegraphics{images/rebase0.png}\\How do we resolve conflicts \emph{before} merging ``experiment'' into ``master''?}
-    %\only<+>{\includegraphics{images/rebase1.png}\\Three-way merge}
-    \only<+>{\includegraphics{images/rebase2.png}\\Rebase}
-    \only<+>{\includegraphics{images/rebase3.png}\\Fast-forward merge}
-  \end{center}
+\begin{frame}{Merging}
+  \begin{itemize}
+  \item Fast and easy: ``just'' moving branch pointers around
+  \item Two types of merge: \emph{fast-forward} and \emph{three-way}\\Git automatically picks the appropriate way
+  \item Using only fast-forward merges makes the history nicely linear and easy to follow.
+  \item When conflicts happen, they still need to be manually resolved.
+  \item \emph{Rebasing} helps keeping the history linear (explained later).
+  \end{itemize}
 \end{frame}
+
+\begin{frame}{Merging: fast-forward}
+  \begin{center}
+    \only<+>{\includegraphics{images/branch3.png}}
+    \only<+>{\includegraphics{images/branch4.png}}
+  \end{center}
+  To merge \texttt{hotfix} into \texttt{master}, Git simply moves the branch pointer forward.\\There cannot be conflicts in this case.
+\end{frame}
+
+\begin{frame}{Merging: three-way}
+  \begin{center}
+    \only<+>{\includegraphics{images/branch5.png}}
+    \only<+>{\includegraphics{images/branch6.png}}
+  \end{center}
+  To merge \texttt{iss53} into \texttt{master}, Git finds the best common ancestor of the two branches then creates an additional \emph{merge commit} to hold the result.\\Conflicts happen when the same part of the same file is changed differently in both branches.
+\end{frame}
+
+% TODO: explain rebase somewhere
+% \begin{frame}{Rebasing}{Merging with a cleaner history}
+%   \begin{center}
+%     \only<+>{\includegraphics{images/rebase0.png}\\How do we resolve conflicts \emph{before} merging ``experiment'' into ``master''?}
+%     %\only<+>{\includegraphics{images/rebase1.png}\\Three-way merge}
+%     \only<+>{\includegraphics{images/rebase2.png}\\Rebase}
+%     \only<+>{\includegraphics{images/rebase3.png}\\Fast-forward merge}
+%   \end{center}
+% \end{frame}
 
 \section{Git commands}
 \begin{frame}{Repository creation}
-  \only<+>{
-    \begin{block}{Initializing a repository in an existing directory}
-      \texttt{git init}
-      \begin{itemize}
-      \item Creates the .git directory
-      \item But doesn't track any files yet
-      \end{itemize}
-    \end{block}
-  }
-  \only<+>{
-    \begin{block}{Cloning an existing repository}
-      \texttt{git clone <URL>}
-      \begin{itemize}
-      \item Copies all data from the source repository
-      \item Checks out the latest version
-      \item Supports several protocols: HTTP, SSH, Git
-      \end{itemize}
-    \end{block}
-  }
+  \begin{block}{Initializing a repository in an existing directory}
+    \texttt{git init}
+    \begin{itemize}
+    \item Creates the .git directory
+    \item But doesn't track any files yet
+    \end{itemize}
+  \end{block}
+  \begin{block}{Cloning an existing repository}
+    \texttt{git clone <URL>}
+    \begin{itemize}
+    \item Copies all data from the source repository
+    \item Checks out the latest version
+    \item Supports several protocols: HTTP, SSH, Git
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 \begin{frame}{Recording changes}
-\only<+>{
   \begin{block}{Staging}
     \texttt{git add <file>}
     \begin{itemize}
     \item Adds the current state of the file to the staging area
-    \item Will be in next commit
     \item If you modify the file after \texttt{git add}, the \alert{new changes are not staged}.
     \note{Advanced: Can also add only a part of a change to the staging area, interactive option.}
     \end{itemize}
   \end{block}
-}
-\only<+>{
   \begin{block}{Committing}
     \texttt{git commit}
     \begin{itemize}
-    \item Writes every changes in the staging area to the repository
-    \item Only staged changes are committed
+    \item Writes staged changes to the repository
+    \end{itemize}
+    \texttt{git commit -a}
+    \begin{itemize}
+    \item Shortcut to skip the staging area
+    \item Automatically stages every tracked file before doing the commit
     \end{itemize}
   \end{block}
-}
 \end{frame}
 
 \begin{frame}{Knowing where you are}
-  \begin{block}{Checking the status of your files}
+  \begin{block}{Checking the status of your working directory}
     \texttt{git status}
     \begin{itemize}
-    \item Lists files by state
-    \item The most useful command to know the current state of your repository
-    \item Gives hints on what to do next or how to undo
+    \item Branch currently checked out, with remote tracking information
+    \item Lists files by state (staged, not staged, untracked)
+    \item The most useful command to know the current state of your working directory
+    \item Gives hints on what to do next or how to undo changes
     \end{itemize}
   \end{block}
 \end{frame}
 
 \begin{frame}{Looking at changes}
-  \begin{block}{Viewing changes inside files}
+  \begin{block}{Viewing changes inside tracked files}
     \texttt{git diff}
     \begin{itemize}
     \item Shows what is changed but not yet staged
@@ -190,19 +209,19 @@
     \texttt{git diff --staged}
     \begin{itemize}
     \item Shows what would go into the next commit
-    \item Compares last commit with ``next'' commit
+    \item Compares last commit with staging area
     \end{itemize}
   \end{block}
 \end{frame}
 
 \begin{frame}{Moving files around}
-  \begin{block}<+->{Removing files}
+  \begin{block}{Removing files}
     \texttt{git rm <file>}
     \begin{itemize}
     \item Deletes the file and stages its removal
     \end{itemize}
   \end{block}
-  \begin{block}<+->{Renaming files}
+  \begin{block}{Renaming files}
     \texttt{git mv <old name> <new name>}
     \begin{itemize}
     \item Renames the file and stages the change
@@ -211,57 +230,95 @@
 \end{frame}
 
 \begin{frame}{Ooops! Undoing}
-  \only<1-2>{
-    \begin{block}<1-2>{Changing your last commit}
-      \texttt{git commit --amend}
-      \begin{itemize}
-      \item Adds staged files to the last commit
-      \item Edit last commit's message
-      \end{itemize}
-    \end{block}
-  }
-  \only<3-4>{
-    \begin{block}{Reverting a modified file}
-      \texttt{git checkout -- <file>}
-      \begin{itemize}
-      \item Discards changes in file
-      \item Reverts to last commit
-      \end{itemize}
-    \end{block}
-    \onslide<4>
-    \begin{block}{Unstaging a staged file}
-      \texttt{git reset HEAD <file>}
-      \begin{itemize}
-      \item Undo \texttt{git add}
-      \end{itemize}
-    \end{block}
-  }
+  \begin{block}{Changing your last commit}
+    \texttt{git commit --amend}
+    \begin{itemize}
+    \item Adds staged files to the \alert{last} commit
+    \item Edit \alert{last} commit's message
+    \item Do not use this on a commit that you have already pushed!
+    \end{itemize}
+  \end{block}
+  \begin{block}{Reverting a modified file}
+    \texttt{git checkout -- <file>}
+    \begin{itemize}
+    \item Discards all uncommitted changes in file
+    \item Reverts the file as it was in the last commit
+    \end{itemize}
+  \end{block}
+  \begin{block}{Unstaging a staged file}
+    \texttt{git reset HEAD <file>}
+    \begin{itemize}
+    \item Undo \texttt{git add}
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 \begin{frame}{History}
   \begin{block}{Viewing the commit history}
     \texttt{git log}
     \begin{itemize}
-    \item Lists commits from most to least recent
-    \item Shows commit checksum, author, date and message
-    \item Has many options to customise output %TODO: list 3 most useful options
+    \item Lists commits from most recent to oldest
+    \item Shows commit hash, author, date and message by default
+    \item Has many options to customise output:
+      \begin{itemize}
+      \item[patch] Show what changed inside files (like \texttt{diff -u})
+      \item[oneline] Prints one line per commit (only hash and summary)
+      \item[decorate] Adds branch and tag names on the commit they point at
+      \item[graph] Builds a visual representation of branches
+      \item[stat] Adds statistics about changed files to every commit
+      \end{itemize}
+      Quick summary example:\\\texttt{git log --oneline --decorate --graph}
     \end{itemize}
   \end{block}
-  % \begin{block}<+->{Graphical interface}
-  %   \texttt{gitk}
-  %   \begin{itemize}
-  %   \item Graphical tool to explore commit history
-  %   \item Shows list of commits, ancestor graph and commit detail
-  %   \end{itemize}
-  % \end{block}
 \end{frame}
 
-\begin{frame}{Branching and merging}
+\begin{frame}{Tagging}
+  \begin{block}{Listing tags}
+    \texttt{git tag}
+    \begin{itemize}
+    \item Lists all tags in alphabetical order
+    \end{itemize}
+    \texttt{git show <tag>}
+    \begin{itemize}
+    \item Prints tag data and commit information
+    \end{itemize}
+  \end{block}
+  \begin{block}{Creating tags}
+    \texttt{git tag <name>}
+    \begin{itemize}
+    \item Creates a \emph{lightweight} tag: like a fixed branch pointer
+    \end{itemize}
+    \texttt{git tag --annotated <name>}
+    \begin{itemize}
+    \item Creates an \emph{annotated} tag: like a commit, has a message and can be signed
+    \end{itemize}
+    \texttt{git tag <name> <commit>}
+    \begin{itemize}
+    \item Tags can be created later on any commit
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Navigating branches}
   \only<+>{
+    \begin{block}{List of all branches}
+      \texttt{git branch [--list] --all}
+      \begin{itemize}
+      \item Lists both remote-tracking and local branches
+      \item Current branch is indicated with an asterisk
+      \end{itemize}
+    \end{block}
     \begin{block}{Creating a new branch}
       \texttt{git branch <name>}
       \begin{itemize}
-      \item Creates a branch from the current branch
+      \item Creates a branch pointing to the current branch
+      \item Only creates a pointer: no files are modified
+      \end{itemize}
+    \end{block}
+    \begin{block}{Deleting a branch}
+      \texttt{git branch --delete <name>}
+      \begin{itemize}
+      \item Branch to delete must be merged in its upstream branch
       \end{itemize}
     \end{block}
   }
@@ -269,15 +326,23 @@
     \begin{block}{Switching to another branch}
       \texttt{git checkout <branch name>}
       \begin{itemize}
-      \item Changes working copy files
+      \item Changes files in working directory
+      \item Working directory must be clean before switching (no uncommitted changes)
+      \end{itemize}
+      \texttt{git checkout -b <new branch name>}
+      \begin{itemize}
+      \item Shortcut to directly switch to a new branch
       \end{itemize}
     \end{block}
   }
+\end{frame}
+
+\begin{frame}{Branching and merging}
   \only<+>{
     \begin{block}{Merging two branches}
       \texttt{git merge <branch name>}
       \begin{itemize}
-      \item Merges changes from target branch into current branch
+      \item Merges changes from given branch into current branch
       \item Conflicts can happen
       \end{itemize}
     \end{block}
@@ -333,11 +398,12 @@
   }
 \end{frame}
 
-%TODO: git tag
-
 \begin{frame}{Where is the manual?}
   \begin{columns}
-    \begin{column}[t]{6cm}
+    \begin{column}[t]{7cm}
+      \begin{block}{Built-in help}
+        \texttt{git help <command>}
+      \end{block}
       \begin{block}{\emph{Pro Git} book}
         \begin{itemize}
         \item \url{http://git-scm.com/book}
@@ -381,6 +447,11 @@
 %\end{frame}
 
 \section{Hands-on}
+% Use the testing repository to play with branches
+% - create, switch, merge and delete
+% - push and pull
+% - trigger merge conflicts and resolve them
+% - rebase and look at history
 
 \begin{frame}{Integration with other tools}
   \begin{block}{Redmine}
@@ -399,3 +470,9 @@
   \end{block}
 \end{frame}
 \end{document}
+
+%TODO: good practices, tricks
+% - commit message
+% - rebase for clean history
+% - delete a branch on the server
+% - branch TTL
