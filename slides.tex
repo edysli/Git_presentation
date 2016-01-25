@@ -136,15 +136,38 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
   To merge \texttt{iss53} into \texttt{master}, Git finds the best common ancestor of the two branches then creates an additional \emph{merge commit} to hold the result.\\Conflicts happen when the same part of the same file is changed differently in both branches.
 \end{frame}
 
-% TODO: explain rebase somewhere
-% \begin{frame}{Rebasing}{Merging with a cleaner history}
-%   \begin{center}
-%     \only<+>{\includegraphics{images/rebase0.png}\\How do we resolve conflicts \emph{before} merging ``experiment'' into ``master''?}
-%     %\only<+>{\includegraphics{images/rebase1.png}\\Three-way merge}
-%     \only<+>{\includegraphics{images/rebase2.png}\\Rebase}
-%     \only<+>{\includegraphics{images/rebase3.png}\\Fast-forward merge}
-%   \end{center}
-% \end{frame}
+\begin{frame}{Rebasing: a cleaner way to integrate changes}
+  \only<+>{
+    \begin{columns}[c]
+      \begin{column}{5cm}
+        \begin{center}
+          \includegraphics[scale=0.8]{images/rebase0.png}\\1) Initial situation: two divergent branches
+        \end{center}
+      \end{column}
+      \begin{column}{6cm}
+        \begin{center}
+          \includegraphics[scale=0.8]{images/rebase1.png}\\2a) \emph{Merge} experiment into master
+          \vskip 0.8em
+          \hrule
+          \vskip 0.8em
+          \includegraphics[scale=0.8]{images/rebase2.png}\\2b) \emph{Rebase} experiment onto master
+        \end{center}
+      \end{column}
+    \end{columns}
+  }
+  \only<+>{
+    \begin{center}
+      \includegraphics{images/rebase2.png}
+    \end{center}
+    \begin{itemize}
+    \item Take changes from one branch (C3) and replay them on top of another branch (C4), no additional merge commit created
+    \item Branches can then be merged with a fast-forward
+    \item History looks linear, easier to follow
+    \item Can be used to make sure changes apply cleanly on a remote branch (rebase master onto origin/master)
+    \item \alert{Do not rebase commits you have already pushed!}
+    \end{itemize}
+  }
+\end{frame}
 
 \section{Git commands}
 \begin{frame}{Repository creation}
