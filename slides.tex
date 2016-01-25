@@ -237,17 +237,17 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
   \end{block}
 \end{frame}
 
-\begin{frame}{Moving files around}
-  \begin{block}{Removing files}
-    \texttt{git rm <file>}
-    \begin{itemize}
-    \item Deletes the file and stages its removal
-    \end{itemize}
-  \end{block}
+\begin{frame}{(Re)Moving files around}
   \begin{block}{Renaming files}
     \texttt{git mv <old name> <new name>}
     \begin{itemize}
     \item Renames the file and stages the change
+    \end{itemize}
+  \end{block}
+  \begin{block}{Removing files}
+    \texttt{git rm <file>}
+    \begin{itemize}
+    \item Deletes the file and stages its removal
     \end{itemize}
   \end{block}
 \end{frame}
@@ -286,7 +286,7 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
       \begin{itemize}
       \item[patch] Show what changed inside files (like \texttt{diff -u})
       \item[oneline] Prints one line per commit (only hash and summary)
-      \item[decorate] Adds branch and tag names on the commit they point at
+      \item[decorate] Adds branch and tag names on the commit they point to
       \item[graph] Builds a visual representation of branches
       \item[stat] Adds statistics about changed files to every commit
       \end{itemize}
@@ -295,7 +295,7 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
   \end{block}
 \end{frame}
 
-\begin{frame}{Tagging}
+\begin{frame}{Labeling commits with tags}
   \begin{block}{Listing tags}
     \texttt{git tag}
     \begin{itemize}
@@ -360,70 +360,92 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
   }
 \end{frame}
 
-\begin{frame}{Branching and merging}
-  \only<+>{
+\begin{frame}{Merging}
     \begin{block}{Merging two branches}
-      \texttt{git merge <branch name>}
+      \texttt{git checkout <branch to merge into>}\\
+      \texttt{git merge <branch to merge>}
       \begin{itemize}
-      \item Merges changes from given branch into current branch
+      \item Merges changes from given branch into \emph{current} branch
       \item Conflicts can happen
       \end{itemize}
     \end{block}
-  }
-  \only<+>{
     \begin{block}{Rebasing}
       \texttt{git rebase <upstream branch>}
       \begin{itemize}
-      \item Replays commit on upstream branch
+      \item Replays commits on upstream branch
+      \item Conflicts can also happen
+      \end{itemize}
+      \texttt{git rebase --interactive <upstream branch>}
+      \begin{itemize}
+      \item Review commits to be replayed (reorder, reword, squash, \ldots)
       \end{itemize}
     \end{block}
-  }
 \end{frame}
 
 \begin{frame}{Interacting with others}
-  \only<1>{
-    \begin{block}{Linking to remote repositories}
-      \texttt{git remote}
+  \only<+>{
+    \begin{block}{Managing links to remote repositories}
+      \texttt{git remote [--verbose]}
       \begin{itemize}
       \item \emph{Remote repositories}: other versions of your project hosted elsewhere
       \item Lists, adds or removes links to remote repositories
-        % \item \emph{origin}: link to the repository you cloned from
-      \end{itemize}%TODO: remote show
+      \item \emph{origin}: the repository you cloned from
+      \end{itemize}
+      \texttt{git remote show <name>}
+      \begin{itemize}
+      \item Displays detailed information about one remote
+        \begin{itemize}
+        \item Fetch and pull URLs
+        \item Remote branches and whether they have a corresponding local branch (\emph{tracked})
+        \item Local $\leftrightarrow$ remote branch mappings for push/pull
+        \end{itemize}
+      \end{itemize}
     \end{block}
   }
-  \only<2-3>{
-    \begin{block}{Retrieving updates}
-      \only<2>{
-        \texttt{git fetch [remote name]}
-        \begin{itemize}
-        \item Downloads new changes from the remote
-        \item Changes go into your repository (\texttt{.git})
-        \item Your local work \alert{is not modified}
-        \end{itemize}
-      }
-      \only<3>{
-        \texttt{git pull}
-        \begin{itemize}
-        \item Shortcut: downloads and merges changes
-        \item Your local work \alert{is modified}
-        \end{itemize}
-      }
+  \only<+>{
+    \begin{block}{Retrieving new commits}
+      \texttt{git fetch [remote name]}
+      \begin{itemize}
+      \item Downloads new changes from the remote
+      \item Changes go into your repository (\texttt{.git})
+      \item Your working directory \alert{is not modified}
+      \item \texttt{git status} now informs about branch divergence
+      \end{itemize}
+    \end{block}
+    \begin{block}{Updating your working directory}
+      \texttt{git pull [--rebase]}
+      \begin{itemize}
+      \item Shortcut: downloads and merges changes = fetch + merge
+      \item Your working directory \alert{is modified}
+      \item With rebase = fetch + rebase
+      \item Conflicts can happen, check with fetch first
+      \end{itemize}
     \end{block}
   }
-  \only<4>{
-    \begin{block}{Sharing updates}
+  \only<+>{
+    \begin{block}{Sharing your commits}
       \texttt{git push [remote name] [branch name]}
       \begin{itemize}
-      \item Sends your changes to a remote repository
-      \item \alert{Do not use without arguments}, it pushes everything!
+      \item Sends your changes to the remote repository
+      \item \alert{Do not use without arguments}, it pushes more than you think!\\\ldots unless you use Git version 2.0 or later
+        \begin{itemize}
+        \item[$v < 2.0$] Push all matching branches (same local and remote names)
+        \item[$v \geqslant 2.0$] Push current branch only if remote matches
+        \end{itemize}
+      \end{itemize}
+    \end{block}
+    \begin{block}{Push rejected!}
+      \begin{itemize}
+      \item Commits rejected if not a fast-forward merge
+      \item Must fetch new commits and merge/rebase before pushing again
       \end{itemize}
     \end{block}
   }
 \end{frame}
 
 \begin{frame}{Where is the manual?}
-  \begin{columns}
-    \begin{column}[t]{7cm}
+  \begin{columns}[t]
+    \begin{column}{7cm}
       \begin{block}{Built-in help}
         \texttt{git help <command>}
       \end{block}
@@ -499,3 +521,4 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
 % - rebase for clean history
 % - delete a branch on the server
 % - branch TTL
+% - commit for someone else
