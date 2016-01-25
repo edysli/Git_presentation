@@ -54,8 +54,10 @@ Packages (Debian) to build PDF:
 
 # License #
 
-[![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)][license]
+[![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)][license]
 
-This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License][license].
+Except otherwise noted, this presentation is copyright 2016 Etienne Dysli Metref, licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][license].
 
-[license]: http://creativecommons.org/licenses/by-sa/4.0/ "Creative Commons License"
+Some images come from the "Pro Git" book (first edition) and are used under a [Creative Commons Attribution Non Commercial Share Alike 3.0][http://creativecommons.org/licenses/by-nc-sa/3.0/] license.
+
+[license]: http://creativecommons.org/licenses/by-nc-sa/4.0/ "Creative Commons License"
