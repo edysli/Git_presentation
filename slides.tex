@@ -70,7 +70,7 @@
 \begin{frame}{Distributed}
   Everyone has a complete copy of the repository
   \begin{center}
-    \includegraphics[height=7cm]{images/distributed.png}
+    \includegraphics[height=7cm]{images/fig0103.pdf}
   \end{center}
 \end{frame}
 
@@ -92,16 +92,14 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
 %TODO: replace picture with v2 from Git book, it's much better
 \begin{frame}{The staging area and file states}
   \begin{center}
-    modified --- staged --- committed
-  \end{center}
-  \begin{center}
-    \includegraphics{images/three_states.png}
+    \only<+>{\includegraphics[height=7cm]{images/fig0106.pdf}}
+    \only<+>{\includegraphics[width=10.8cm]{images/fig0201.pdf}}
   \end{center}
 \end{frame}
 
 \begin{frame}{Branches}
   \begin{center}
-    \includegraphics{images/commit.png}
+    \includegraphics[height=4cm]{images/fig0307.pdf}
   \end{center}
   \begin{itemize}
   \item[Branch] Pointer to a commit\\Very fast to create, delete or modify
@@ -122,16 +120,16 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
 
 \begin{frame}{Merging: fast-forward}
   \begin{center}
-    \only<+>{\includegraphics{images/branch3.png}}
-    \only<+>{\includegraphics{images/branch4.png}}
+    \only<+>{\includegraphics[scale=0.4]{images/fig0313.pdf}}
+    \only<+>{\includegraphics[scale=0.4]{images/fig0314.pdf}}
   \end{center}
   To merge \texttt{hotfix} into \texttt{master}, Git simply moves the branch pointer forward.\\There cannot be conflicts in this case.
 \end{frame}
 
 \begin{frame}{Merging: three-way}
   \begin{center}
-    \only<+>{\includegraphics{images/branch5.png}}
-    \only<+>{\includegraphics{images/branch6.png}}
+    \only<+>{\includegraphics[scale=0.4]{images/fig0315.pdf}}
+    \only<+>{\includegraphics[scale=0.4]{images/fig0317.pdf}}
   \end{center}
   To merge \texttt{iss53} into \texttt{master}, Git finds the best common ancestor of the two branches then creates an additional \emph{merge commit} to hold the result.\\Conflicts happen when the same part of the same file is changed differently in both branches.
 \end{frame}
@@ -141,23 +139,23 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
     \begin{columns}[c]
       \begin{column}{5cm}
         \begin{center}
-          \includegraphics[scale=0.8]{images/rebase0.png}\\1) Initial situation: two divergent branches
+          \includegraphics[scale=0.26]{images/fig0327.pdf}\\1) Initial situation: two divergent branches
         \end{center}
       \end{column}
       \begin{column}{6cm}
         \begin{center}
-          \includegraphics[scale=0.8]{images/rebase1.png}\\2a) \emph{Merge} experiment into master
+          \includegraphics[scale=0.26]{images/fig0328.pdf}\\2a) \emph{Merge} experiment into master
           \vskip 0.8em
           \hrule
           \vskip 0.8em
-          \includegraphics[scale=0.8]{images/rebase2.png}\\2b) \emph{Rebase} experiment onto master
+          \includegraphics[scale=0.26]{images/fig0329.pdf}\\2b) \emph{Rebase} experiment onto master
         \end{center}
       \end{column}
     \end{columns}
   }
   \only<+>{
     \begin{center}
-      \includegraphics{images/rebase2.png}
+      \includegraphics[scale=0.3]{images/fig0329.pdf}
     \end{center}
     \begin{itemize}
     \item Take changes from one branch (C3) and replay them on top of another branch (C4), no additional merge commit created
