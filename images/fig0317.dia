@@ -884,6 +884,43 @@
           <dia:real val="0.29999999999999999"/>
         </dia:attribute>
       </dia:object>
+      <dia:object type="Standard - Line" version="0" id="O17">
+        <dia:attribute name="obj_pos">
+          <dia:point val="19.1146,7.2687"/>
+        </dia:attribute>
+        <dia:attribute name="obj_bb">
+          <dia:rectangle val="19.1839,6.25546;20.1026,7.19661"/>
+        </dia:attribute>
+        <dia:attribute name="conn_endpoints">
+          <dia:point val="19.1146,7.2687"/>
+          <dia:point val="20.1021,6.255"/>
+        </dia:attribute>
+        <dia:attribute name="numcp">
+          <dia:int val="1"/>
+        </dia:attribute>
+        <dia:attribute name="line_width">
+          <dia:real val="0.05000000074505806"/>
+        </dia:attribute>
+        <dia:attribute name="start_arrow">
+          <dia:enum val="3"/>
+        </dia:attribute>
+        <dia:attribute name="start_arrow_length">
+          <dia:real val="0.40000000000000002"/>
+        </dia:attribute>
+        <dia:attribute name="start_arrow_width">
+          <dia:real val="0.29999999999999999"/>
+        </dia:attribute>
+        <dia:attribute name="absolute_start_gap">
+          <dia:real val="0.14999999999999999"/>
+        </dia:attribute>
+        <dia:attribute name="absolute_end_gap">
+          <dia:real val="0.050000000000000003"/>
+        </dia:attribute>
+        <dia:connections>
+          <dia:connection handle="0" to="O13" connection="4"/>
+          <dia:connection handle="1" to="O15" connection="8"/>
+        </dia:connections>
+      </dia:object>
     </dia:group>
   </dia:layer>
 </dia:diagram>
