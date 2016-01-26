@@ -2,11 +2,11 @@
 \mode<presentation>
 \usepackage[english]{babel}
 \usepackage{graphicx}
-\usepackage[biolinum]{libertine}
+\usepackage{libertine}
 
 \title{Version control with Git}
 \author{Etienne Dysli Metref}
-\date{December 2015}
+\date{January 2016}
 
 \AtBeginSection[]
 {
@@ -75,7 +75,7 @@
 \end{frame}
 
 \begin{frame}{Inside a Git-managed project}
-The \texttt{.git} directory is the repository, everything else is the \emph{working directory}.
+The .git directory is the \emph{repository}, everything else is the \emph{working directory}.
   \begin{center}
     \includegraphics{images/directory_structure.png}
   \end{center}
@@ -83,13 +83,13 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
 
 \begin{frame}{Commits}
   \begin{itemize}
-  \item Git stores whole files in the repository, not differences. Thus a \emph{commit} is a snapshot of tracked files at given time.
-  \item Each commit is identified by its hash (SHA-1). There are no sequential revision numbers.
-  \item Commits contain pointers to their parent commit(s).
+  \item Git stores whole files in the repository, not differences
+  \item A \emph{commit} is a snapshot of tracked files at given time
+  \item Each commit is identified by its hash (SHA-1), no sequential revision numbers
+  \item Commits contain pointers to their parent commit(s)
   \end{itemize}
 \end{frame}
 
-%TODO: replace picture with v2 from Git book, it's much better
 \begin{frame}{The staging area and file states}
   \begin{center}
     \only<+>{\includegraphics[height=7cm]{images/fig0106.pdf}}
@@ -112,9 +112,9 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
   \begin{itemize}
   \item Fast and easy: ``just'' moving branch pointers around
   \item Two types of merge: \emph{fast-forward} and \emph{three-way}\\Git automatically picks the appropriate way
-  \item Using only fast-forward merges makes the history nicely linear and easy to follow.
-  \item When conflicts happen, they still need to be manually resolved.
-  \item \emph{Rebasing} helps keeping the history linear (explained later).
+  \item Using only fast-forward merges makes the history nicely linear and easy to follow
+  \item When conflicts happen, they still need to be manually resolved
+  \item \emph{Rebasing} helps keeping the history linear
   \end{itemize}
 \end{frame}
 
@@ -123,7 +123,10 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
     \only<+>{\includegraphics[scale=0.4]{images/fig0313.pdf}}
     \only<+>{\includegraphics[scale=0.4]{images/fig0314.pdf}}
   \end{center}
-  To merge \texttt{hotfix} into \texttt{master}, Git simply moves the branch pointer forward.\\There cannot be conflicts in this case.
+  \begin{itemize}
+  \item Merge hotfix into master = move the branch pointer forward
+  \item There cannot be conflicts in this case
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Merging: three-way}
@@ -131,7 +134,10 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
     \only<+>{\includegraphics[scale=0.4]{images/fig0315.pdf}}
     \only<+>{\includegraphics[scale=0.4]{images/fig0317.pdf}}
   \end{center}
-  To merge \texttt{iss53} into \texttt{master}, Git finds the best common ancestor of the two branches then creates an additional \emph{merge commit} to hold the result.\\Conflicts happen when the same part of the same file is changed differently in both branches.
+  \begin{itemize}
+  \item Merge iss53 into master: find best common ancestor of both branches then create a \emph{merge commit} to hold the result
+  \item Conflicts happen when the same part of the same file is changed differently in both branches
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Rebasing: a cleaner way to integrate changes}
@@ -461,9 +467,9 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
         \end{itemize}
       \end{block}
     \end{column}
-    \begin{column}[t]{3cm}
+    \begin{column}{3cm}
       \begin{center}
-        \includegraphics[height=3cm]{images/pro-git.jpg}
+        \includegraphics[width=3cm]{images/progit2.png}
       \end{center}
     \end{column}
   \end{columns}
@@ -472,7 +478,7 @@ The \texttt{.git} directory is the repository, everything else is the \emph{work
 \section{Branch layout}
 \begin{frame}{Distributed but centralised}
   \begin{center}
-    \includegraphics[height=8cm]{images/distributed-origin.png}
+    %\includegraphics[height=8cm]{images/distributed-origin.png}
   \end{center}
 \end{frame}
 
