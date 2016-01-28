@@ -487,11 +487,87 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
   \end{columns}
 \end{frame}
 
-\section{Branch layout}
-\begin{frame}{Distributed but centralised}
-  \begin{center}
-    %\includegraphics[height=8cm]{images/distributed-origin.png}
-  \end{center}
+\begin{frame}{Tips and tricks}
+  \begin{block}{Stage only some parts of a file}
+    \texttt{git add --patch <file>}
+  \end{block}
+  \begin{block}{Delete a branch on the server}
+    \texttt{git push origin --delete <branch>}
+  \end{block}
+  \begin{block}{Commit for someone else}
+    \texttt{git commit --author=<author>}
+  \end{block}
+\end{frame}
+
+\section{Good practices}
+
+%TODO: good practices, tricks
+% - rebase for clean history
+% - branch TTL
+% - push often
+
+\begin{frame}{Pick your work flow}
+  \begin{columns}[c]
+    \begin{column}{5cm}
+      \begin{center}
+        \includegraphics[width=5cm]{images/fig0501.pdf}\\Centralised
+      \end{center}
+    \end{column}
+    \begin{column}{6cm}
+      \begin{center}
+        \includegraphics[width=5cm]{images/fig0503.pdf}\\Dictator and lieutenants
+      \end{center}
+    \end{column}
+  \end{columns}
+  \begin{columns}[c]
+    \begin{column}{8cm}
+      \begin{center}
+        \includegraphics[width=7cm]{images/fig0502.pdf}\\Integration manager
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Commit guidelines}
+  \only<+>{
+    \begin{block}{Whitespace errors}
+      \begin{itemize}
+      \item No trailing whitespace\\Tends to annoy developers\\Run \texttt{git diff --check} before committing
+      \item Verify indentation, spaces vs. tabs
+      \end{itemize}
+    \end{block}
+    \begin{block}{Size: what goes in \emph{one} commit?}
+      \begin{itemize}
+      \item Commits should be ``small''
+      \item Logically separate set of changes
+      \item Easier to review or revert
+        % TODO see rewriting history
+      \end{itemize}
+    \end{block}
+  }
+  \only<+>{
+    \begin{block}{The commit message}
+      \begin{enumerate}
+      \item Summary, like email subject\\About 50 characters maximum
+      \item \emph{blank line}
+      \item Detailed explanation: motivation, implementation changes, etc.\\Lists and paragraphs are fine\\Wrapped to 72 characters per line
+      \item Tracking number
+      \end{enumerate}
+      \begin{itemize}
+      \item Imperative present tense ``Add tests for \ldots''
+      \item Your contribution to project history, think of your future self!
+      \item Tools rely on this formatting
+      \end{itemize}
+    \end{block}
+  }
+\end{frame}
+
+\begin{frame}{Push often}
+If you work with other people on a shared repository, push often. At least daily.
+What if you are sick or absent the next day and your colleagues depend on your work? They are blocked if you didn't push.
+\end{frame}
+
+\begin{frame}{Rewriting history}
 \end{frame}
 
 %\begin{frame}{Daily workflow}
@@ -531,10 +607,3 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
   \end{block}
 \end{frame}
 \end{document}
-
-%TODO: good practices, tricks
-% - commit message
-% - rebase for clean history
-% - delete a branch on the server
-% - branch TTL
-% - commit for someone else
