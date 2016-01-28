@@ -562,26 +562,35 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
   }
 \end{frame}
 
-\begin{frame}{Push often}
-If you work with other people on a shared repository, push often. At least daily.
-What if you are sick or absent the next day and your colleagues depend on your work? They are blocked if you didn't push.
+\begin{frame}{Daily work flow}
+  \begin{block}{Update your repository}
+    \begin{itemize}
+    \item No uncommitted changes nor unpushed commits\\$\rightarrow$ \texttt{git pull}
+    \item Unpushed commits\\$\rightarrow$ \texttt{git pull --rebase}
+    \item Uncommitted changes or cautious\\$\rightarrow$ \texttt{git fetch; git status}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Push often}
+    \begin{enumerate}
+    \item Rearrange and clean up your commits\\$\rightarrow$ \texttt{git rebase --interactive}
+    \item Push shared branches to the reference repository\\$\rightarrow$ \texttt{git push origin master}
+    \end{enumerate}
+  \end{block}
 \end{frame}
 
-\begin{frame}{Rewriting history}
+\begin{frame}{Rewriting and improving history}
+  \begin{block}{The interactive rebase}
+    \texttt{git rebase --interactive}
+    \begin{itemize}
+    \item Reorder commits
+    \item Edit files or message
+    \item Squash several commits into one
+    \item Split a commit into several commits
+    \item Drop commits
+    \end{itemize}
+    Reminder: this works well only on commits that are \alert{not yet pushed} elsewhere
+  \end{block}
 \end{frame}
-
-%\begin{frame}{Daily workflow}
-%  Synchronizing your development branch:
-%  \begin{enumerate}
-%  \item \texttt{git fetch}
-%  \item \texttt{git rebase}
-%  \item If there are conflicts, fix them, then:
-%  \item \texttt{git add} modified files
-%  \item \texttt{git rebase --continue}
-%  \item \texttt{git push origin development}
-%  \end{enumerate}
-%  Commit more changes or push to origin
-%\end{frame}
 
 \section{Hands-on}
 % Use the testing repository to play with branches
