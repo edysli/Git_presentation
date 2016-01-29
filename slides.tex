@@ -448,13 +448,27 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
         \end{itemize}
       \end{itemize}
     \end{block}
-    \begin{block}{Push rejected!}
+    \begin{block}{Sharing your tags}
+      \texttt{git push [remote name] <tag name>}
       \begin{itemize}
-      \item Commits rejected if not a fast-forward merge
-      \item Must fetch new commits and merge/rebase before pushing again
+      \item Push one tag
+      \end{itemize}
+      \texttt{git push [remote name] --tags}
+      \begin{itemize}
+      \item Push all tags
       \end{itemize}
     \end{block}
   }
+\end{frame}
+
+\begin{frame}{Push rejected!}
+  \begin{block}{Why?}
+    \begin{itemize}
+    \item Changes in different files are not automatically merged
+    \item Commits rejected if not a fast-forward merge
+    \item Must fetch new commits and merge/rebase before pushing again
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 \subsection{Documentation}
