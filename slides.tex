@@ -487,7 +487,7 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
   \end{columns}
 \end{frame}
 
-\begin{frame}{Tips and tricks}
+\begin{frame}{Bag of tricks}
   \begin{block}{Stage only some parts of a file}
     \texttt{git add --patch <file>}
   \end{block}
@@ -496,6 +496,12 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
   \end{block}
   \begin{block}{Commit for someone else}
     \texttt{git commit --author=<author>}
+  \end{block}
+  \begin{block}{Save working directory state and reapply it later}
+    \texttt{git stash save}\\\texttt{git stash apply}
+  \end{block}
+  \begin{block}{Delete untracked files}
+    \texttt{git clean [--dry-run]}
   \end{block}
 \end{frame}
 
