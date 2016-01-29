@@ -508,9 +508,7 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
 \section{Good practices}
 
 %TODO: good practices, tricks
-% - rebase for clean history
 % - branch TTL
-% - push often
 
 \begin{frame}{Pick your work flow}
   \begin{columns}[c]
@@ -547,7 +545,6 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
       \item Commits should be ``small''
       \item Logically separate set of changes
       \item Easier to review or revert
-        % TODO see rewriting history
       \end{itemize}
     \end{block}
   }
@@ -576,7 +573,7 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
     \item Uncommitted changes or cautious\\$\rightarrow$ \texttt{git fetch; git status}
     \end{itemize}
   \end{block}
-  \begin{block}{Push often}
+  \begin{block}{Push often: at least daily}
     \begin{enumerate}
     \item Rearrange and clean up your commits\\$\rightarrow$ \texttt{git rebase --interactive}
     \item Push shared branches to the reference repository\\$\rightarrow$ \texttt{git push origin master}
@@ -591,7 +588,7 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
     \item Reorder commits
     \item Edit files or message
     \item Squash several commits into one
-    \item Split a commit into several commits
+    \item Split a commit into several commits (complicated)
     \item Drop commits
     \end{itemize}
     Reminder: this works well only on commits that are \alert{not yet pushed} elsewhere
