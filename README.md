@@ -31,7 +31,7 @@ Packages (Debian) to build PDF:
  - Knowing where you are: status
  - Looking at changes: diff, diff --staged
  - (Re)Moving files around: mv, rm
- - Ooops! Undoing: commit --amend, checkout, reset
+ - Ooops! Undoing: commit --amend, checkout, reset, revert
  - History: log
  - Labeling commits with tags: tag
 2. Branching and merging
@@ -41,16 +41,22 @@ Packages (Debian) to build PDF:
  - Managing links to remote repositories: remote
  - Retrieving new commits: fetch
  - Updating your working directory: pull
- - Sharing your commits: push
-4. Where is the manual?
+ - Sharing your commits and tags: push, push --tags
+ - Push rejected!
+4. Documentation
+ - Where is the manual?
+ - Bag of tricks
 
-### More to come... ###
+### Good practices ###
 
-- Writing good commit messages
-- Interactive rebase for clean history
-- Feature branches, branch TTL
-- Delete a branch on the server
-- Commit for someone else
+- Pick your work flow
+- Commit guidelines
+- Daily work flow
+- Rewriting and improving history
+
+### Hands-on ###
+
+- Hands-on ideas
 
 # License #
 
