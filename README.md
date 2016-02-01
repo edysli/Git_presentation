@@ -5,6 +5,7 @@ My way of teaching Git around me, mostly used at work. :)
 Packages (Debian) to build PDF:
 - texlive-latex-recommended
 - texlive-fonts-extra
+Install then run `xelatex slides.tex`.
 
 ## Contents ##
 
