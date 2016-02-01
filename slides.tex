@@ -263,27 +263,39 @@ The .git directory is the \emph{repository}, everything else is the \emph{workin
 \end{frame}
 
 \begin{frame}{Ooops! Undoing}
-  \begin{block}{Changing your last commit}
-    \texttt{git commit --amend}
-    \begin{itemize}
-    \item Adds staged files to the \alert{last} commit
-    \item Edit \alert{last} commit's message
-    \item Do not use this on a commit that you have already pushed!
-    \end{itemize}
-  \end{block}
-  \begin{block}{Reverting a modified file}
-    \texttt{git checkout -- <file>}
-    \begin{itemize}
-    \item Discards all uncommitted changes in file
-    \item Reverts the file as it was in the last commit
-    \end{itemize}
-  \end{block}
-  \begin{block}{Unstaging a staged file}
-    \texttt{git reset HEAD <file>}
-    \begin{itemize}
-    \item Undo \texttt{git add}
-    \end{itemize}
-  \end{block}
+  \only<+>{
+    \begin{block}{Changing your last commit}
+      \texttt{git commit --amend}
+      \begin{itemize}
+      \item Adds staged files to the \alert{last} commit
+      \item Edit \alert{last} commit's message
+      \item Do not use this on a commit that you have already pushed!
+      \end{itemize}
+    \end{block}
+    \begin{block}{Discarding a modified file}
+      \texttt{git checkout -- <file>}
+      \begin{itemize}
+      \item Discards all uncommitted changes in file
+      \item Reverts the file as it was in the last commit
+      \end{itemize}
+    \end{block}
+    \begin{block}{Unstaging a staged file}
+      \texttt{git reset HEAD <file>}
+      \begin{itemize}
+      \item Undo \texttt{git add}
+      \end{itemize}
+    \end{block}
+  }
+  \only<+>{
+    \begin{block}{Undoing a whole commit}
+      \texttt{git revert <commit>}
+      \begin{itemize}
+      \item Creates a new commit with the opposite of changes in the target commit
+      \item Like $f^{-1}$ where $f$ describes one commit
+      \item Safe to use on commits that are already pushed
+      \end{itemize}
+    \end{block}
+  }
 \end{frame}
 
 \begin{frame}{History}
